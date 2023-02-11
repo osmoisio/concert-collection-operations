@@ -9,10 +9,13 @@ namespace Assignment_III
         DateTime dateAndTime;
         double price;
 
-        public Concert()
+        static double increment;
+        static double decrement;
+
+        public Concert(string title, string location)
         {
-            title = "not known";
-            location = "not known";
+            this.title = title;
+            this.location = location;
         }
 
         public Concert(string title, string location, DateTime dateAndTime, double price)
@@ -21,6 +24,16 @@ namespace Assignment_III
             this.location = location;
             this.dateAndTime = dateAndTime;
             this.price = price;
+        }
+
+        public static double Decrement
+        {
+            set { decrement = value; }
+        }
+
+        public static double Increment
+        {
+            set { increment = value; }
         }
 
         public override string ToString()
@@ -48,9 +61,9 @@ namespace Assignment_III
                 return true;
             return false;
         }
-        
+
         //< operator
-        public static bool operator < (Concert c1, Concert c2)
+        public static bool operator <(Concert c1, Concert c2)
         {
             if (c1.price < c2.price)
                 return true;
@@ -68,15 +81,38 @@ namespace Assignment_III
         //++ operator
         public static Concert operator ++(Concert c)
         {
-            c.price += 5;
+            c.price += increment;
             return c;
         }
 
         //-- operator
         public static Concert operator --(Concert c)
         {
-            c.price -= 5;
+            c.price -= decrement;
             return c;
+        }
+
+        public override bool Equals(object obj)
+        {
+            // If parameter is null return false.
+            if (obj == null)
+            {
+                return false;
+            }
+            //If parameter cannot be cast to Point return false.
+            Concert c = obj as Concert;
+            if ((System.Object)c == null)
+            {
+                return false;
+            }
+            if (this.title == c.title && this.location == c.location && this.price == c.price)
+                return true;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }
